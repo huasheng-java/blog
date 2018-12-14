@@ -191,7 +191,7 @@ var selectBlog = function() {
 				title : '博主推荐',
 				field : 'isrecommend',
 				align : 'center',
-				width : '4%',
+				width : '3%',
 				formatter : function(value, row, index) {
 					if (row.isrecommend == 0) {
 						return '<button class="btn-xs">否</button> ';
@@ -205,7 +205,7 @@ var selectBlog = function() {
 				title : '状态',
 				field : 'status',
 				align : 'center',
-				width : '6%',
+				width : '4%',
 				formatter : function(value, row, index) {
 					if (row.status == -1) {
 						return '<button class="btn-xs btn-primary">草稿</button>';
@@ -220,7 +220,7 @@ var selectBlog = function() {
 				title : '发表时间',
 				field : 'addtime',
 				align : 'center',
-				width : '15%',
+				width : '17%',
 				formatter : function(value, row, index) {
 					return Format(row.addtime, "yyyy-MM-dd hh:mm:ss");
 				}
@@ -461,7 +461,7 @@ var operationBlog = function(idArray, status, isrecommend, isTop) {
 				$("#allBlog").bootstrapTable('refresh');
 				swal("更新成功", "", "success");
 			} else {
-				swal("更新失败", "请重新操作", "error");
+				swal("更新失败", data.msg, "error");
 			}
 		},
 		error : function() {

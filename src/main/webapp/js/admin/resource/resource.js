@@ -364,7 +364,7 @@ var updateResource = function(id, title, status) {
 				$("#allResource").bootstrapTable('refresh');
 				swal("更新成功", "", "success");
 			} else if (data.status == 0) {
-				swal("更新失败", "", "error");
+				swal("更新失败", data.msg, "error");
 			}
 		},
 		error : function() {
@@ -400,7 +400,7 @@ var deleteResource = function(id, title) {
 					initResourceCount();
 					swal("删除成功！", "", "success");
 				} else {
-					swal("删除失败", "请重新操作", "error");
+					swal("删除失败", data.msg, "error");
 				}
 			},
 			error : function() {

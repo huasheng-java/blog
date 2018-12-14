@@ -282,9 +282,8 @@ var addBlog = function(id) {
 
 //只有验证通过才能执行 添加
 $("#add_draft,#add_draft2").click(function() {
-	if ($("#commentForm").valid()) {
-		addBlog(-1);
-	}
+  $("#prev2").click();
+  addBlog(-1);
 });
 
 //只有验证通过才能执行 预览

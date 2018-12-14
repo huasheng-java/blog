@@ -271,7 +271,7 @@ var updateBlog = function(id) {
 					window.location.href = "../blog/blogTable.jsp";
 				}, 1500);
 			} else {
-				swal("更新失败", "请重新操作", "error");
+				swal("更新失败", data.msg, "error");
 			}
 		},
 		error : function() {
@@ -311,6 +311,7 @@ function Format(datetime, fmt) {
 //只有验证通过才能执行 添加
 $("#add_draft,#add_draft2").click(function() {
 	if ($("#commentForm").valid()) {
+	  $("#prev2").click();
 		updateBlog(-1);
 	}
 });

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.luotf.annotation.SystemLog;
+import com.luotf.model.Bloger;
 import com.luotf.model.RResource;
+import com.luotf.service.BlogerService;
 import com.luotf.service.ResourceService;
 import com.luotf.util.ConstantUtil;
 
@@ -28,6 +31,9 @@ public class ResourceControllerAdmin {
 
 	@Resource(name = "resourceServiceImpl")
 	private ResourceService resourceService;
+	@Resource(name = "blogerServiceImpl")
+	private BlogerService blogerService;
+	
 	
 	/**
 	  * 实现添加资源功能
@@ -59,8 +65,16 @@ public class ResourceControllerAdmin {
 	 @RequestMapping(value = "/updateResource",method = RequestMethod.POST)
 	 @ResponseBody
 	 @SystemLog(description = ConstantUtil.RESOURCE_UPDATE,userType=ConstantUtil.USERTYPE_ADMIN) 
-	 public Map<String, Object> updateResource(String prarm,RResource resource) throws Exception{
+	 public Map<String, Object> updateResource(String prarm,HttpSession session,RResource resource) throws Exception{
 		 Map<String, Object> map=new HashMap<String, Object>();
+		 String username = (String) session.getAttribute("username");
+		    Bloger bloger = blogerService.findUserByLoginName(username);
+		    if (bloger.getHasPermission() == 0) {
+		      map.put("status", 0);
+		      map.put("msg", "没有删除权限");
+		      return map;
+		    }
+		 
 		 if(resourceService.updateByPrimaryKeySelective(resource)!=0){
 			 map.put("status", 200);
 		 }else{
@@ -79,8 +93,15 @@ public class ResourceControllerAdmin {
 	 @RequestMapping(value = "/deleteResource",method = RequestMethod.POST)
 	 @ResponseBody
 	 @SystemLog(description = ConstantUtil.RESOURCE_DELETE,userType=ConstantUtil.USERTYPE_ADMIN) 
-	 public Map<String, Object> deleteResource(String prarm, Integer id) throws Exception{
+	 public Map<String, Object> deleteResource(String prarm, HttpSession session,Integer id) throws Exception{
 		 Map<String, Object> map=new HashMap<String, Object>();
+		 String username = (String) session.getAttribute("username");
+		    Bloger bloger = blogerService.findUserByLoginName(username);
+		    if (bloger.getHasPermission() == 0) {
+		      map.put("status", 0);
+		      map.put("msg", "没有删除权限");
+		      return map;
+		    }
 		 if(resourceService.deleteByPrimaryKey(id)!=0){
 			 map.put("status", 200);
 		 }else{

@@ -11,6 +11,7 @@ import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,9 @@ import com.github.pagehelper.PageInfo;
 import com.luotf.annotation.AccessLimit;
 import com.luotf.annotation.SystemLog;
 import com.luotf.model.Blog;
+import com.luotf.model.Bloger;
 import com.luotf.service.BlogService;
+import com.luotf.service.BlogerService;
 import com.luotf.util.ConstantUtil;
 import com.luotf.util.subStringUtil;
 
@@ -36,6 +39,8 @@ public class BlogControllerAdmin {
 
   @Resource(name = "blogServiceImpl")
   private BlogService blogService;
+  @Resource(name = "blogerServiceImpl")
+  private BlogerService blogerService;
 
   /**
    * 上传封面图片
@@ -92,18 +97,27 @@ public class BlogControllerAdmin {
   @RequestMapping(value = "/deletePic", method = RequestMethod.POST)
   @ResponseBody
   @SystemLog(description = ConstantUtil.DELETE_IMAGES, userType = ConstantUtil.USERTYPE_ADMIN)
-  public Map<String, Object> deletePic(String prarm, String path, HttpServletRequest request)
+  public Map<String, Object> deletePic(String prarm, HttpSession session,String path, HttpServletRequest request)
       throws Exception {
-    Map<String, Object> map = new HashMap<String, Object>();
+	Map<String, Object> map = new HashMap<String, Object>();
+	String username = (String)session.getAttribute("username");
+	Bloger bloger = blogerService.findUserByLoginName(username);
+	if(bloger.getHasPermission() == 0){
+		map.put("status", 0);
+		map.put("msg", "没有删除权限");
+		return map;
+	}
     String tempPath = path.replace("/", "\\");
     File fileTemp = new File("c:\\" + tempPath);
     if (fileTemp.exists()) {
       if (fileTemp.isFile()) {
         if (fileTemp.delete()) {
           map.put("status", 200);
+          map.put("msg", "删除成功");
         } else {
           // 0 表示删除失败
           map.put("status", 0);
+          map.put("msg", "删除失败");
         }
       }
     }
@@ -191,13 +205,22 @@ public class BlogControllerAdmin {
   @RequestMapping(value = "/deleteBlog", method = RequestMethod.POST)
   @ResponseBody
   @SystemLog(description = ConstantUtil.BLOG_DELETE, userType = ConstantUtil.USERTYPE_ADMIN)
-  public Map<String, Object> deleteBlog(Integer id) throws Exception {
+  public Map<String, Object> deleteBlog(Integer id,HttpSession session) throws Exception {
     Map<String, Object> map = new HashMap<String, Object>();
+    String username = (String)session.getAttribute("username");
+	Bloger bloger = blogerService.findUserByLoginName(username);
+	if(bloger.getHasPermission() == 0){
+		map.put("status", 0);
+		map.put("msg", "没有删除权限");
+		return map;
+	}
     if (blogService.deleteBlogById(id) != 0) {
       map.put("status", 200);
+      map.put("msg", "删除成功");
     } else {
       // 0表示：删除失败
       map.put("status", 0);
+      map.put("msg", "删除失败");
     }
     return map;
   }
@@ -212,9 +235,15 @@ public class BlogControllerAdmin {
   @RequestMapping(value = "/updateBlog", method = RequestMethod.POST)
   @ResponseBody
   @SystemLog(description = ConstantUtil.BLOG_UPDATE, userType = ConstantUtil.USERTYPE_ADMIN)
-  public Map<String, Object> updateBlog(String prarm, Blog blog) throws Exception {
+  public Map<String, Object> updateBlog(String prarm, Blog blog,HttpSession session) throws Exception {
     Map<String, Object> map = new HashMap<String, Object>();
-
+    String username = (String)session.getAttribute("username");
+	Bloger bloger = blogerService.findUserByLoginName(username);
+	if(bloger.getHasPermission() == 0){
+		map.put("status", 0);
+		map.put("msg", "没有更新权限");
+		return map;
+	}
     // 将中文的分号转换成英文的分号
     if (blog.getKeyword() != null && blog.getKeyword() != "") {
       blog.setKeyword(subStringUtil.subKeyword(blog.getKeyword()));
@@ -222,9 +251,11 @@ public class BlogControllerAdmin {
 
     if (blogService.updateBlogSelective(blog) != 0) {
       map.put("status", 200);
+      map.put("msg", "更新成功");
     } else {
       // 0表示：更新失败
       map.put("status", 0);
+      map.put("msg", "更新失败");
     }
     return map;
   }

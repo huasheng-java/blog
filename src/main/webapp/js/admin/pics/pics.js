@@ -52,7 +52,7 @@ var delPic = function(path) {
           swal("删除成功！", "", "success");
           common_getPicFileList();
         } else {
-          swal("删除失败", "请重新操作", "error");
+          swal("删除失败", data.msg, "error");
         }
       },
       error : function() {

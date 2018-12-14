@@ -12,12 +12,75 @@ $(".top").click(function() {
 var pageNext = 1;
 var count = 1;
 var isEnd = false;
+var time = null;
 var width = window.innerWidth || document.documentElement.clientWidth;
 if (width < 660) {
   var pagenav = '<p style="text-align:center;margin:-5px auto 20px;"><a href="javascript:void(0);" onclick="initBlogByClickMore()"><i class="fa fa-arrow-down"></i> 加载更多</a></p>';
   $(".pageMin").html(pagenav);
-  //$(".top").css("display", "none");
+//$(".top").css("display", "none");
 }
+
+function init() {
+  //实现弹出广告的效果
+  //1.设置定时效果
+  time = setInterval("showAd()", 12000);
+}
+//2.书写显示广告图片的函数
+function showAd() {
+  /*//3.获取广告图片的位置
+  var adEle = document.getElementById("image2");
+  //4.修改广告图片元素里面的属性让其显示
+  adEle.style.display = "block";*/
+  showAdToGitEE();
+  //5.清除显示图片的定时操作
+  clearInterval(time);
+//6.设置隐藏图片的定时操作
+//time = setInterval("hiddenAd()", 3000);
+}
+
+/*//7.书写隐藏广告图片的函数
+function hiddenAd() {
+  //8.获取广告图片并设置其style属性的display值为none
+  document.getElementById("image2").style.display = "none";
+  //9.清除隐藏广告图片的定时操作
+  clearInterval(time);
+}*/
+
+function showAdToGitEE() {
+  swal({
+    title : '前往开源地址 :)',
+    text : '此系统已在gitee/github上开源,将全面介绍此系统的管理端,技术栈;如果您觉得不错，欢迎前往gitee上 【Star，Fork】 ',
+    type : 'info',
+    showCancelButton : true,
+    confirmButtonColor : "#1c84c6",
+    confirmButtonText : "前往",
+    cancelButtonText : "取消",
+    timer:8000,
+    closeOnConfirm : false,
+    closeOnCancel: false
+  }, function(isConfirm) {
+    if (isConfirm) {
+      window.open("https://gitee.com/luotf/Art_Blog");
+      swal.close()
+    } else {
+      swal({
+        title:"确定不去看看吗？", 
+        text:"你的访问就是对博主最大的支持，谢谢 ^-^", 
+        type:"info",
+        confirmButtonColor : "#1c84c6",
+        showCancelButton : true,
+        confirmButtonText : "前往",
+        cancelButtonText : "取消",
+        },function(isConfirm){
+          if (isConfirm) {
+            window.open("https://gitee.com/luotf/Art_Blog");
+          }
+          swal.close()
+      });
+    }
+  });
+}
+
 $(window).scroll(
   function() {
     if (isEnd == true) {
@@ -74,6 +137,7 @@ $(document).ready(function() {
   initBlogByAllTypeBlog();
   initBlogByLike(); //初始化特别推荐6篇文章
   initBlogByClick(); //初始化点击排行5篇文章
+  init();
 });
 
 var initBlogByClickMore = function() {
@@ -108,9 +172,9 @@ var initBlogByTop = function() {
       var data = data.blogList;
       for (var i = 0; i < data.length; i++) {
         var id = data[i].id.toString(8) * data[i].id;
-        topBlog +='<li><a href="find/' + id + '.html" title='+ data[i].title + ' target="_blank">'+data[i].title+'</a></li>';
-        /*topBlog += '<li class="animated fadeIn"><a href="find/' + id + '.html" onclick=""><img style="width:415px;height:155px;" src="' + data[i].images + '"></a><span>'
-          + data[i].title + '</span></li>'*/
+        topBlog += '<li><a href="find/' + id + '.html" title=' + data[i].title + ' target="_blank">' + data[i].title + '</a></li>';
+      /*topBlog += '<li class="animated fadeIn"><a href="find/' + id + '.html" onclick=""><img style="width:415px;height:155px;" src="' + data[i].images + '"></a><span>'
+        + data[i].title + '</span></li>'*/
       }
       // 初始化数据
       $(".notice").find("ul").html(topBlog);
@@ -129,58 +193,58 @@ var initBlogByTop = function() {
 //初始化每个类别的前N
 var initBlogByAllTypeBlog = function() {
 
-$.ajax({
-  url : 'selectBlogByAllType',
-  type : 'get',
-  dataType : 'json',
-  success : function(data) {
-    var likeBlog = '';
-    var data = data.blogMap;
-    var tab_button =""; 
-    var newsitem ="";
-    var indexTab = 0;
-    for(var type in data){
-      if(indexTab==0){
-        tab_button +="<li class='newscurrent'>"+type+"</li>"
-      }else{
-        tab_button +="<li>"+type+"</li>"
-      }
-      indexTab++;
-     }
-    $(".tab_buttons ul").html(tab_button);
-    var index = 0;
-    for(var type in data){
-      var newspic ="";
-      var newslist = "";
-      if(index==0){
-        newsitem+="<div class='newsitem' style='display: block;'><div class='newspic'><ul>";
-      }else{
-        newsitem+="<div class='newsitem' style='display: none;'><div class='newspic'><ul>";
-      }
-      index++;
-      newslist +="<ul class='newslist'>"
-      for(var i=0;i<data[type].length;i++){
-        var id = data[type][i].id.toString(8) * data[type][i].id;
-        if(i<2){
-          newspic+="<li><a href=find/"+ id + ".html target='_blank'><img src="+data[type][i].images+"> <span>"+data[type][i].title+"</span></a></li>";
+  $.ajax({
+    url : 'selectBlogByAllType',
+    type : 'get',
+    dataType : 'json',
+    success : function(data) {
+      var likeBlog = '';
+      var data = data.blogMap;
+      var tab_button = "";
+      var newsitem = "";
+      var indexTab = 0;
+      for (var type in data) {
+        if (indexTab == 0) {
+          tab_button += "<li class='newscurrent'>" + type + "</li>"
+        } else {
+          tab_button += "<li>" + type + "</li>"
         }
-        if(i>=1){
-          newslist +="<li><i></i><a href=find/"+ id + ".html target='_blank'>"+data[type][i].title+"<p>"+data[type][i].introduction+"</p></a></li>";
-        }
+        indexTab++;
       }
-      newspic+="</ul></div>"
-      newsitem +=newspic;
-      newsitem +=newslist;
-      newsitem+="</ul></div>"
+      $(".tab_buttons ul").html(tab_button);
+      var index = 0;
+      for (var type in data) {
+        var newspic = "";
+        var newslist = "";
+        if (index == 0) {
+          newsitem += "<div class='newsitem' style='display: block;'><div class='newspic'><ul>";
+        } else {
+          newsitem += "<div class='newsitem' style='display: none;'><div class='newspic'><ul>";
+        }
+        index++;
+        newslist += "<ul class='newslist'>"
+        for (var i = 0; i < data[type].length; i++) {
+          var id = data[type][i].id.toString(8) * data[type][i].id;
+          if (i < 2) {
+            newspic += "<li><a href=find/" + id + ".html target='_blank'><img src=" + data[type][i].images + "> <span>" + data[type][i].title + "</span></a></li>";
+          }
+          if (i >= 1) {
+            newslist += "<li><i></i><a href=find/" + id + ".html target='_blank'>" + data[type][i].title + "<p>" + data[type][i].introduction + "</p></a></li>";
+          }
+        }
+        newspic += "</ul></div>"
+        newsitem += newspic;
+        newsitem += newslist;
+        newsitem += "</ul></div>"
+      }
+      $('.newstab').html(newsitem);
+    },
+    error : function() {
+      layer.msg('请求太快，请稍后再试！', {
+        icon : 5
+      });
     }
-    $('.newstab').html(newsitem);
-  },
-  error : function() {
-    layer.msg('请求太快，请稍后再试！', {
-      icon : 5
-    });
-  }
-});
+  });
 };
 
 

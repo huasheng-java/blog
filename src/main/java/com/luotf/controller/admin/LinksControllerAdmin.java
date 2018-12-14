@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.luotf.annotation.SystemLog;
+import com.luotf.model.Bloger;
 import com.luotf.model.Links;
+import com.luotf.service.BlogerService;
 import com.luotf.service.LinksService;
 import com.luotf.util.ConstantUtil;
 
@@ -28,6 +31,9 @@ public class LinksControllerAdmin {
 
 	@Resource(name = "linksServiceImpl")
 	private LinksService linksService;
+	@Resource(name = "blogerServiceImpl")
+	private BlogerService blogerService;
+	
 	
 	/**
 	  * 实现添加友链功能
@@ -79,8 +85,15 @@ public class LinksControllerAdmin {
 	 @RequestMapping(value = "/deleteLinks",method = RequestMethod.POST)
 	 @ResponseBody
 	 @SystemLog(description = ConstantUtil.LINKS_DELETE,userType=ConstantUtil.USERTYPE_ADMIN) 
-	 public Map<String, Object> deleteLinks(String prarm, Integer id) throws Exception{
+	 public Map<String, Object> deleteLinks(String prarm, HttpSession session,Integer id) throws Exception{
 		 Map<String, Object> map=new HashMap<String, Object>();
+		 String username = (String) session.getAttribute("username");
+		    Bloger bloger = blogerService.findUserByLoginName(username);
+		    if (bloger.getHasPermission() == 0) {
+		      map.put("status", 0);
+		      map.put("msg", "没有删除权限");
+		      return map;
+		    }
 		 if(linksService.deleteByPrimaryKey(id)!=0){
 			 map.put("status", 200);
 		 }else{

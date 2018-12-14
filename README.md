@@ -16,7 +16,7 @@
 2. 你可以拿它作为博客模板，因为 Art_Blog 界面美观，满足私人博客的一切要求。
 3. Art_Blog 还有许多不完善的地方，鄙人才疏学浅，望见谅！
 
-### 演示站点
+### 最新版演示站点
 [www.luotf.com](http://www.luotf.com/)   <br>
 后台账号：luotf&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密码:admin
 
@@ -59,15 +59,15 @@ contabs | 选项卡
 
 ### 界面预览
 #### <font color=#1E90FF size=3 >[ 首页 ]</font> 显示 置顶的博客，特别推荐，点击排行，最新博客等，无限滚动加载。
-![首页](images/index.jpg)
+![首页](images/index.png)
 
 #### <font color=#1E90FF size=3 >[ 列表页 ]</font> 显示某个类别的博客列表，关键字搜索，博客数量，专题等。
-![列表页](images/list.jpg)
+![列表页](images/list.png)
 
 #### <font color=#1E90FF size=3 >[ 详情页 ]</font> 显示博客的具体内容，评论，推荐博客等。（截长屏 导致图片浮动元素 出现多次）
 <html>
-  <img src="https://github.com/luotf/Art_Blog/raw/master/images/info.jpg" width="590" div align=left height="750" alt="PC"/>
-  <img src="https://github.com/luotf/Art_Blog/raw/master/images/info_1.png" width="240" div align=right height="426" alt="手机"/>
+  <img src="https://github.com/luotf/Art_Blog/raw/master/images/info.png" width="590" div align=left height="750" alt="PC"/>
+  <img src="https://github.com/luotf/Art_Blog/raw/master/images/mobile.png" width="240" div align=right height="426" alt="手机"/>
 </html>
 <br>
 
@@ -109,7 +109,7 @@ contabs | 选项卡
 > &emsp;5. 然后通过Tomcat启动项目即可  http://localhost:8080/Blog <br>
 > &emsp;6. 如果个别文件有报错，请直接无视。因版本和开发工具差异。
 > 
-#### 最新更新情况，[**请移至这里**](https://github.com/luotf/Art_Blog/tree/master)
+#### 最新更新情况，[**请移至这里**](http://www.luotf.com)
 ### 开源赞助
 &emsp;&emsp;如果你觉得 本系统不错，有用，对你的学习有帮助，以及作者的辛苦，请作者喝杯 咖啡吧。
 #### <center><font color=#00BFFF size=3 >[ 欢迎 Star，Fork ]&emsp;&emsp;[ 欢迎提出问题，提出需求 ]&emsp;&emsp;[ 谢谢 ！]</font></center>

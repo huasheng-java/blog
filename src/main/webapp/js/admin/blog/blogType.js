@@ -228,6 +228,8 @@ var updateBlogType = function(id, typename) {
 					swal("更新成功", "", "success");
 				} else if (data.status == 2) {
 					$(".tip2").html("该类别已经存在");
+				} else{
+				  swal("更新失败",  data.msg, "error");
 				}
 			},
 			error : function() {
@@ -266,7 +268,7 @@ var deleteBlogType = function(id, name) {
 				} else if (data.status == 2) {
 					swal("删除失败", "该类别下有博客,不能删除", "error");
 				} else {
-					swal("删除失败", "请重新操作", "error");
+					swal("删除失败", data.msg, "error");
 				}
 			},
 			error : function() {

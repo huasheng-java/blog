@@ -66,9 +66,9 @@
       <div class="headline">
         <ul>
           <li><a href="find/20400.html"
-            title="【2019届校园招聘】如何取得互联网10+offer？"><img
+            title="【2019届校园招聘】如何准备互联网校招？"><img
               src="${pageContext.request.contextPath}/images/3ee0644472fa8556562ab3d8716b5316.jpg"
-              alt="【2019届校园招聘】如何取得互联网10+offer？"><span>【2019届校园招聘】<br> 如何取得互联网10+offer？</span></a></li>
+              alt="【2019届校园招聘】【2019届校园招聘】如何准备互联网校招？"><span>【2019届校园招聘】<br> 该如何准备互联网校招？</span></a></li>
           <li><a href="find/19873.html"
             title="【匆匆校园招聘季】总结校招经历的这几个月…"><img
               src="${pageContext.request.contextPath}/images/3f0b6da48a6fd4e626a021ff7bd0d74f.jpg"
@@ -158,10 +158,10 @@
       </div>
       <div class="git whitebg links animated fadeIn"
         style="display:none;animation-delay:0.3s">
-        <h2 class="htitle">开源项目</h2>
+        <h2 class="htitle">开源地址</h2>
         <ul class="animated fadeIn">
-          <li><a href="https://github.com/luotf" target="_blank">Github</a></li>
-          <li><a href="https://gitee.com/luotf" target="_blank">Gitee&nbsp;&nbsp;</a></li>
+          <li><a href="https://gitee.com/luotf/Art_Blog" target="_blank">Gitee&nbsp;&nbsp;</a></li>
+          <li><a href="https://github.com/luotf/Art_Blog" target="_blank">Github</a></li>
         </ul>
       </div>
       <div class="weixin whitebg animated fadeIn"
