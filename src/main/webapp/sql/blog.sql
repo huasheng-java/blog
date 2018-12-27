@@ -1,4 +1,4 @@
-﻿-- --------------------------------------------------------
+-- --------------------------------------------------------
 -- 主机:                           127.0.0.1
 -- 服务器版本:                     5.7.22-log - MySQL Community Server (GPL)
 -- 服务器操作系统:                 Win64
@@ -189,13 +189,14 @@ CREATE TABLE `t_bloger` (
   `username` varchar(255) collate utf8_unicode_ci default NULL COMMENT '用户名',
   `password` varchar(255) collate utf8_unicode_ci default NULL COMMENT '密码',
   `email` varchar(255) collate utf8_unicode_ci default NULL COMMENT '博主邮箱',
+   `hasPermission` int(11) default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of t_bloger
 -- ----------------------------
-INSERT INTO `t_bloger` VALUES ('2', 'admin', '123456', null);
+INSERT INTO `t_bloger` VALUES ('2', 'admin', '123456', null,1);
 
 
 -- ----------------------------
